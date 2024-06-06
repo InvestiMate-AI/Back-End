@@ -15,26 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/v1/member")
+@RequestMapping("/api/v1/members")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
 
     // 특정 Member 정보 조회
-    @GetMapping("/profile/{memberId}")
-    public ResponseEntity<ApiResponse<MemberGetProfileResponseDto>> getMemberProfile(Principal principal, @PathVariable(name = "memberId") Long memberId) {
-        System.out.println("MemberUtil.getMemberOAuth2Id(principal) = " + MemberUtil.getMemberOAuth2Id(principal));
-        return ApiResponse.success(SuccessStatus.GET_PROFILE_SUCCESS, memberService.getMemberProfile(memberId));
-    }
-    @GetMapping("/profile")
-    public ResponseEntity<ApiResponse<MemberGetProfileResponseDto>> getMemberProfile2(Principal principal, @RequestParam(name = "memberId") Long memberId) {
-        System.out.println("MemberUtil.getMemberOAuth2Id(principal) = " + MemberUtil.getMemberOAuth2Id(principal));
-        return ApiResponse.success(SuccessStatus.GET_PROFILE_SUCCESS, memberService.getMemberProfile(memberId));
+    @GetMapping
+    public ResponseEntity<ApiResponse<MemberGetProfileResponseDto>> getMemberProfile(Principal principal) {
+        return ApiResponse.success(SuccessStatus.GET_PROFILE_SUCCESS, memberService.getMemberProfile(MemberUtil.getMemberOAuth2Id(principal)));
     }
 
-
-    // Member 유저 프로필 등록
-    @PostMapping("/profile")
+    // Member 유저 프로필 업데이트
+    @PatchMapping("/profile")
     public ResponseEntity<ApiResponse<Object>> saveMemberProfile(Principal principal, @Valid @RequestBody MemberSaveProfileDto memberSaveProfileDto) {
         String memberOAuth2Id = MemberUtil.getMemberOAuth2Id(principal);
         memberService.saveMemberProfile(memberOAuth2Id, memberSaveProfileDto);

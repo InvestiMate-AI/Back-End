@@ -17,8 +17,8 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public MemberGetProfileResponseDto getMemberProfile(Long memberId) {
-        Member member = memberRepository.findMemberByIdOrThrow(memberId);
+    public MemberGetProfileResponseDto getMemberProfile(String oAuth2Id) {
+        Member member = memberRepository.findByOAuth2IdOrThrow(oAuth2Id);
         return MemberGetProfileResponseDto.of(member);
     }
 
@@ -30,10 +30,9 @@ public class MemberService {
     }
 
     public void saveMemberProfile(String oAuth2Id, MemberSaveProfileDto memberSaveProfileDto) {
-        Member byoAuth2Id = memberRepository.findByoAuth2IdOrThrow(oAuth2Id);
+        Member byoAuth2Id = memberRepository.findByOAuth2IdOrThrow(oAuth2Id);
         String nickname = memberSaveProfileDto.nickname();
         String memberIntro = memberSaveProfileDto.memberIntro();
-        byoAuth2Id.updateNickname(nickname);
-        byoAuth2Id.updateMemberIntro(memberIntro);
+        byoAuth2Id.updateMemberProfile(nickname, memberIntro);
     }
 }

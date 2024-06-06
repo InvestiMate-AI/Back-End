@@ -46,8 +46,10 @@ public class Member extends BaseTimeEntity {
     }
 
     // Setter를 쓰지않고 업데이트 메소드 활용
+    public void updateMemberProfile(String nickname, String memberIntro) {
+        this.nickname = nickname;
+        this.memberIntro = memberIntro;
+    }
     public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken;}
-    public void updateNickname(String newNickname) {this.nickname = newNickname;}
-    public void updateMemberIntro(String memberIntro) {this.memberIntro = memberIntro;}
 
 }

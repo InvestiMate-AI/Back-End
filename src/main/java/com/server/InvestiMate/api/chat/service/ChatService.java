@@ -27,7 +27,7 @@ public class ChatService {
         Integer year = Integer.valueOf(chatSaveAssistantDto.year());
         String companyName = chatSaveAssistantDto.companyName();
         String reportType = chatSaveAssistantDto.reportType();
-        Member member = memberRepository.findByoAuth2IdOrThrow(memberOAuth2Id);
+        Member member = memberRepository.findByOAuth2IdOrThrow(memberOAuth2Id);
         Report report = reportRepository.findByReportYearAndReportCompanyAndReportTypeOrThrow(year, companyName, reportType);
 
         // Implement this method to generate a unique assistant ID
