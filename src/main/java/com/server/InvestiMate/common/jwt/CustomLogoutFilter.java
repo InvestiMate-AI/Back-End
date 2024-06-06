@@ -1,16 +1,12 @@
-package com.server.InvestiMate.api.auth.jwt;
+package com.server.InvestiMate.common.jwt;
 
 import com.server.InvestiMate.api.auth.service.AuthService;
-import com.server.InvestiMate.api.member.domain.Member;
-import com.server.InvestiMate.api.member.repository.MemberRepository;
-import com.server.InvestiMate.api.member.service.MemberService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;

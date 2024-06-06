@@ -81,7 +81,8 @@ public class ControllerExceptionAdvice {
     }
 
     /**
-     * ???
+     * 사실 따로 처리해줘서 필요없음 - 잘못된 인자가 전달 됐을 시 예외 처리
+     * find___OrThrow로 처리해주기 때문에 노상관
      */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiResponse> handleIllegalArgument(IllegalArgumentException ex) {

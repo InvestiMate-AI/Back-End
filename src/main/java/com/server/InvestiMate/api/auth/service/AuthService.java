@@ -4,7 +4,7 @@ import com.server.InvestiMate.api.auth.dto.response.AuthTokenResponseDto;
 import com.server.InvestiMate.api.member.domain.Member;
 import com.server.InvestiMate.api.member.domain.RoleType;
 import com.server.InvestiMate.api.member.repository.MemberRepository;
-import com.server.InvestiMate.api.auth.jwt.JwtUtil;
+import com.server.InvestiMate.common.jwt.JwtUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

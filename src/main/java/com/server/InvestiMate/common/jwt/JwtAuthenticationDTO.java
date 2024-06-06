@@ -1,4 +1,4 @@
-package com.server.InvestiMate.api.auth.jwt;
+package com.server.InvestiMate.common.jwt;
 
 import com.server.InvestiMate.api.member.domain.RoleType;
 import lombok.Builder;

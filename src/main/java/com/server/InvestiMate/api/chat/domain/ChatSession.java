@@ -37,7 +37,6 @@ public class ChatSession extends BaseEntity {
     private List<ChatMessage> messages = new ArrayList<>();
 
     @Builder
-
     public ChatSession(Member member, Report report, String threadId) {
         this.member = member;
         this.report = report;

@@ -1,7 +1,7 @@
-package com.server.InvestiMate.api.auth.jwt;
+package com.server.InvestiMate.common.jwt;
 
 import com.server.InvestiMate.api.member.domain.RoleType;
-import com.server.InvestiMate.api.auth.jwt.exception.JwtExceptionType;
+import com.server.InvestiMate.common.jwt.exception.JwtExceptionType;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

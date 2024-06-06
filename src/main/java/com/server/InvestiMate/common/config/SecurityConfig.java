@@ -1,9 +1,8 @@
 package com.server.InvestiMate.common.config;
 
-import com.server.InvestiMate.api.auth.jwt.*;
 import com.server.InvestiMate.api.auth.service.AuthService;
 import com.server.InvestiMate.api.auth.service.CustomOAuth2UserService;
-import com.server.InvestiMate.api.member.repository.MemberRepository;
+import com.server.InvestiMate.common.jwt.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
