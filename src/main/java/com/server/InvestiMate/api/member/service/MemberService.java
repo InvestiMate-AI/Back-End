@@ -17,22 +17,21 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public MemberGetProfileResponseDto getMemberProfile(String oAuth2Id) {
-        Member member = memberRepository.findByOAuth2IdOrThrow(oAuth2Id);
+    public MemberGetProfileResponseDto getMemberProfile(Long memberId) {
+        Member member = memberRepository.findMemberByIdOrThrow(memberId);
         return MemberGetProfileResponseDto.of(member);
     }
 
-    public void updateRefreshToken(String oAuth2Id, String refreshToken) {
-        Member member = memberRepository.findByoAuth2Id(oAuth2Id)
-                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+    public void updateRefreshToken(Long memberId, String refreshToken) {
+        Member member = memberRepository.findMemberByIdOrThrow(memberId);
         member.updateRefreshToken(refreshToken);
         memberRepository.save(member);
     }
 
-    public void saveMemberProfile(String oAuth2Id, MemberSaveProfileDto memberSaveProfileDto) {
-        Member byoAuth2Id = memberRepository.findByOAuth2IdOrThrow(oAuth2Id);
+    public void saveMemberProfile(Long memberId, MemberSaveProfileDto memberSaveProfileDto) {
+        Member member = memberRepository.findMemberByIdOrThrow(memberId);
         String nickname = memberSaveProfileDto.nickname();
         String memberIntro = memberSaveProfileDto.memberIntro();
-        byoAuth2Id.updateMemberProfile(nickname, memberIntro);
+        member.updateMemberProfile(nickname, memberIntro);
     }
 }

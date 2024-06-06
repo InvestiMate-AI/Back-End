@@ -13,9 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 
-/**
- * https://github.com/jwtk/jjwt
- */
 @Slf4j
 @Component
 public class JwtUtil {
@@ -34,13 +31,13 @@ public class JwtUtil {
     /**
      * 토큰 생성
      */
-    public String generateToken(String category, String oAuth2Id, String role, Long expiredMs) {
+    public String generateToken(String category, Long memberId, String role, Long expiredMs) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + expiredMs * 1000);
 
         return Jwts.builder()
                 .claim("category", category)
-                .claim("oAuth2Id", oAuth2Id)
+                .claim("memberId", memberId)
                 .claim("role", role)
                 .issuedAt(now)
                 .expiration(expiration)
@@ -67,9 +64,9 @@ public class JwtUtil {
         try {
             // JWT 파서를 생성하고, parseClaimsJws(token) 메소드로 토큰의 유효성을 검증
             Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token);
+                    .verifyWith(secretKey)
+                    .build()
+                    .parseSignedClaims(token);
             return JwtExceptionType.VALID_JWT_TOKEN;
         } catch (io.jsonwebtoken.security.SignatureException exception) {
             log.error("잘못된 JWT 서명을 가진 토큰입니다.");
@@ -89,8 +86,8 @@ public class JwtUtil {
         }
     }
 
-    public String getOAuth2Id(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("oAuth2Id", String.class);
+    public Long getMemberId(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("memberId", Long.class);
     }
 
     public RoleType getRole(String token) {

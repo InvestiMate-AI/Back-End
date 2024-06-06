@@ -14,15 +14,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
         return findMemberById(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER.getMessage()));
     }
-
     Optional<Member> findByoAuth2Id(String oAuth2Id);
-    default Member findByOAuth2IdOrThrow(String oAuth2Id) {
-        return findByoAuth2Id(oAuth2Id)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER.getMessage()));
-    }
 
     Optional<Member> findMemberByRefreshToken(String refreshToken);
-    default Member findByRefreshTokenOrThrow(String refreshToken) {
+    default Member findMemberByRefreshTokenOrThrow(String refreshToken) {
         return findMemberByRefreshToken(refreshToken)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER.getMessage()));
     }

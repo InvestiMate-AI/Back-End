@@ -28,7 +28,7 @@ public class Report {
     private String assistantsId;
 
     @OneToMany(mappedBy = "report")
-    private List<ChatSession> chatSessions = new ArrayList<>();
+    private List<Thread> threads = new ArrayList<>();
 
     public void createAssistantId(String assistantsId) { this.assistantsId = assistantsId;}
 }
