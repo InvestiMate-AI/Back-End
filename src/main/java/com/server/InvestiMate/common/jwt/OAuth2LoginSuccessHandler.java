@@ -13,7 +13,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -25,15 +24,15 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("--------------------------- OAuth2LoginSuccessHandler ---------------------------");
         CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
 
-        String oAuth2Id = principal.getOAuth2Id();
+        Long memberId = principal.getMemberId();
         String authorities = principal.getAuthorities().toString();
-        String accessToken = jwtUtil.generateToken("access", oAuth2Id, authorities, jwtUtil.accessTokenExpireLength);
-        String refreshToken = jwtUtil.generateToken("refresh", oAuth2Id, authorities, jwtUtil.refreshTokenExpireLength);
+        String accessToken = jwtUtil.generateToken("access", memberId, authorities, jwtUtil.accessTokenExpireLength);
+        String refreshToken = jwtUtil.generateToken("refresh", memberId, authorities, jwtUtil.refreshTokenExpireLength);
 
         response.addCookie(createCookie("access", accessToken));
         response.addCookie(createCookie("refresh", refreshToken));
 
-        memberService.updateRefreshToken(oAuth2Id, refreshToken);
+        memberService.updateRefreshToken(memberId, refreshToken);
         response.sendRedirect(jwtUtil.JWT_REDIRECT);
     }
     private Cookie createCookie(String key, String value) {

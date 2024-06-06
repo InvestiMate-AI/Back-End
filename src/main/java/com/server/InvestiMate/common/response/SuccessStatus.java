@@ -20,6 +20,9 @@ public enum SuccessStatus {
      * chat
      */
     CREATE_THREAD_SUCCESS(HttpStatus.CREATED, "쓰레드 생성 성공"),
+    GET_THREADS_SUCCESS(HttpStatus.OK, "쓰레드들 조회 성공"),
+    GET_THREAD_SUCCESS(HttpStatus.OK, "채팅방 조회 성공"),
+    CREATE_MESSAGE_SUCCESS(HttpStatus.CREATED, "메세지 생성 성공"),
 
     /**
      * content
@@ -55,8 +58,7 @@ public enum SuccessStatus {
      * notification
      */
     READ_NOTIFICATION_SUCCESS(HttpStatus.OK,"노티 체크 성공"),
-    COUNT_NOTIFICATION_SUCCESS(HttpStatus.OK,"노티 개수 체크 완료")
-    ;
+    COUNT_NOTIFICATION_SUCCESS(HttpStatus.OK,"노티 개수 체크 완료");
 
     private final HttpStatus httpStatus;
     private final String message;

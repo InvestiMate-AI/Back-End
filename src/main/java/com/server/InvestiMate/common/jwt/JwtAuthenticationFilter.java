@@ -27,7 +27,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     /**
      * JwtAuthenticationFilter를 거치지 않을 URL
      */
-    private static final String[] whitelist = {"/api/v1/auth/reissue", "/login"};
+    private static final String[] whitelist = {
+            "/api/v1/auth/reissue",
+            "/token",
+            "/login",
+            "/api/v1/contents",
+            "/api/v1/contents/**/detail",
+            "/api/v1/contents/**/comments",
+            "/api/v1/contents/**/comments/**",
+            "/api/v1/members",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-ui/index.html"};
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String requestURI = request.getRequestURI();
@@ -41,18 +54,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         JwtExceptionType validateResult = jwtUtil.validateToken(accessToken);
 
         if (validateResult == JwtExceptionType.VALID_JWT_TOKEN) {
-            // 토큰에서 username과 role 획득
-            String oAuth2Id = jwtUtil.getOAuth2Id(accessToken);
+            // 토큰에서 memberId와 role 획득
+            Long memberId = jwtUtil.getMemberId(accessToken);
             RoleType role = jwtUtil.getRole(accessToken);
 
             Member jwtInfo = Member.builder()
-                    .oAuth2Id(oAuth2Id)
                     .roleType(role)
                     .build();
             // UserDetails에 회원 정보 객체 담기
             CustomOAuth2User customOAuth2User = new CustomOAuth2User(jwtInfo);
             // 스프링 시큐리티 인증 토큰 생성
-            Authentication authentication = new UsernamePasswordAuthenticationToken(oAuth2Id, null, customOAuth2User.getAuthorities());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(memberId, null, customOAuth2User.getAuthorities());
             // 세션에 사용자 등록
             SecurityContextHolder.getContext().setAuthentication(authentication);
 

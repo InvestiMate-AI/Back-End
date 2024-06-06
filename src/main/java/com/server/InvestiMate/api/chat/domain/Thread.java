@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ChatSession extends BaseEntity {
+public class Thread extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,11 +33,11 @@ public class ChatSession extends BaseEntity {
     @Column(name = "thread_id")
     private String threadId;
 
-    @OneToMany(mappedBy = "chatSession")
-    private List<ChatMessage> messages = new ArrayList<>();
+    @OneToMany(mappedBy = "thread")
+    private List<Message> messages = new ArrayList<>();
 
     @Builder
-    public ChatSession(Member member, Report report, String threadId) {
+    public Thread(Member member, Report report, String threadId) {
         this.member = member;
         this.report = report;
         this.threadId = threadId;

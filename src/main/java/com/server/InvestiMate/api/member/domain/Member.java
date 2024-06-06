@@ -1,11 +1,15 @@
 package com.server.InvestiMate.api.member.domain;
 
+import com.server.InvestiMate.api.chat.domain.Thread;
 import com.server.InvestiMate.common.auditing.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,6 +40,9 @@ public class Member extends BaseTimeEntity {
 
     @Column(nullable = true, name = "member_intro")
     private String memberIntro;
+
+    @OneToMany(mappedBy = "member")
+    private List<Thread> threads = new ArrayList<>();
 
     @Builder // OAuth2.0 로그인 시 자동 입력되는 정보
     private Member(String oAuth2Id, String name, String email, RoleType roleType){

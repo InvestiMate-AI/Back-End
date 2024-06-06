@@ -1,10 +1,13 @@
 package com.server.InvestiMate.api.chat.service;
 
-import com.server.InvestiMate.api.chat.domain.ChatSession;
+import com.server.InvestiMate.api.chat.domain.Message;
+import com.server.InvestiMate.api.chat.domain.Thread;
 import com.server.InvestiMate.api.chat.domain.Report;
 import com.server.InvestiMate.api.chat.dto.request.ChatCreateThreadDto;
+import com.server.InvestiMate.api.chat.dto.request.MessageCreateRequestDto;
 import com.server.InvestiMate.api.chat.dto.response.ThreadsResponseDto;
-import com.server.InvestiMate.api.chat.repository.ChatSessionRepository;
+import com.server.InvestiMate.api.chat.repository.MessageRepository;
+import com.server.InvestiMate.api.chat.repository.ThreadRepository;
 import com.server.InvestiMate.api.chat.repository.ReportRepository;
 import com.server.InvestiMate.api.member.domain.Member;
 import com.server.InvestiMate.api.member.repository.MemberRepository;
@@ -16,28 +19,41 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ChatService {
+public class ChatCommandService {
     private final AssistantsClient assistantsClient;
     private final MemberRepository memberRepository;
     private final ReportRepository reportRepository;
-    private final ChatSessionRepository chatSessionRepository;
+    private final ThreadRepository threadRepository;
+    private final MessageRepository messageRepository;
 
 
-    public void createThread(String memberOAuth2Id, ChatCreateThreadDto chatSaveAssistantDto) {
+    public void createThread(Long memberId, ChatCreateThreadDto chatSaveAssistantDto) {
         Integer year = Integer.valueOf(chatSaveAssistantDto.year());
         String companyName = chatSaveAssistantDto.companyName();
         String reportType = chatSaveAssistantDto.reportType();
-        Member member = memberRepository.findByOAuth2IdOrThrow(memberOAuth2Id);
+        Member member = memberRepository.findMemberByIdOrThrow(memberId);
         Report report = reportRepository.findByReportYearAndReportCompanyAndReportTypeOrThrow(year, companyName, reportType);
 
         // Implement this method to generate a unique assistant ID
         ThreadsResponseDto threads = assistantsClient.createThreads();
-        ChatSession chatSession = ChatSession.builder()
+        Thread thread = Thread.builder()
                 .member(member)
                 .report(report)
                 .threadId(threads.id())
                 .build();
-        chatSessionRepository.save(chatSession);
+        threadRepository.save(thread);
+    }
+
+    public void saveMessage(Long memberId, Long chatRoomId, MessageCreateRequestDto messageCreateRequestDto) {
+        Member member = memberRepository.findMemberByIdOrThrow(memberId);
+        Thread thread = threadRepository.findThreadByIdOrThrow(chatRoomId);
+        Message message = Message.builder()
+                .member(member)
+                .thread(thread)
+                .question(messageCreateRequestDto.question())
+                .answer(messageCreateRequestDto.answer())
+                .build();
+        messageRepository.save(message);
     }
 
 }

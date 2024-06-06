@@ -23,14 +23,14 @@ public class MemberController {
     // 특정 Member 정보 조회
     @GetMapping
     public ResponseEntity<ApiResponse<MemberGetProfileResponseDto>> getMemberProfile(Principal principal) {
-        return ApiResponse.success(SuccessStatus.GET_PROFILE_SUCCESS, memberService.getMemberProfile(MemberUtil.getMemberOAuth2Id(principal)));
+        return ApiResponse.success(SuccessStatus.GET_PROFILE_SUCCESS, memberService.getMemberProfile(MemberUtil.getMemberId(principal)));
     }
 
     // Member 유저 프로필 업데이트
     @PatchMapping("/profile")
     public ResponseEntity<ApiResponse<Object>> saveMemberProfile(Principal principal, @Valid @RequestBody MemberSaveProfileDto memberSaveProfileDto) {
-        String memberOAuth2Id = MemberUtil.getMemberOAuth2Id(principal);
-        memberService.saveMemberProfile(memberOAuth2Id, memberSaveProfileDto);
+        Long memberId = MemberUtil.getMemberId(principal);
+        memberService.saveMemberProfile(memberId, memberSaveProfileDto);
         return ApiResponse.success(SuccessStatus.SAVE_MEMBER_PROFILE);
     }
 }

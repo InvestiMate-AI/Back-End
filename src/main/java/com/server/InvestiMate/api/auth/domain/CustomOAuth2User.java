@@ -15,9 +15,7 @@ public class CustomOAuth2User implements OAuth2User {
 
     private final Member member;
 
-    public String getOAuth2Id() {
-        return member.getOAuth2Id();
-    }
+    public Long getMemberId() { return member.getId(); }
 
     @Override
     public String getName() {
