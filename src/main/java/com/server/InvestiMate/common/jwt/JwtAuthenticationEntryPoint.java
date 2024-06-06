@@ -1,4 +1,4 @@
-package com.server.InvestiMate.api.auth.jwt;
+package com.server.InvestiMate.common.jwt;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
