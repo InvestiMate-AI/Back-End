@@ -20,14 +20,10 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ChatQueryService {
     private final MemberRepository memberRepository;
-    private final ThreadRepository threadRepository;
     private final MessageRepository messageRepository;
     public List<ThreadGetAllResponseDto> getThreads(Long memberId) {
-        Member member = memberRepository.findMemberByIdOrThrow(memberId);
-        List<Thread> threads = member.getThreads();
-        return threads.stream()
-                .map(chatSession -> ( ThreadGetAllResponseDto.of(chatSession)))
-                .collect(Collectors.toList());
+        List<ThreadGetAllResponseDto> threads = memberRepository.findThreadsByMemberId(memberId);
+        return threads;
     }
 
     public List<MessageGetAllResponseDto> getChatRoom(Long chatRoomId) {
