@@ -4,6 +4,7 @@ import com.server.InvestiMate.api.chat.domain.Thread;
 
 public record ThreadGetAllResponseDto(
         Long chatRoomId,
+        String assistantId,
         String threadId,
         Integer reportYear,
         String reportCompany,
@@ -13,6 +14,7 @@ public record ThreadGetAllResponseDto(
     public static ThreadGetAllResponseDto of(Thread thread){
         return new ThreadGetAllResponseDto(
                 thread.getId(),
+                thread.getReport().getAssistantsId(),
                 thread.getThreadId(),
                 thread.getReport().getReportYear(),
                 thread.getReport().getReportCompany(),
