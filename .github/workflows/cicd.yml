@@ -4,10 +4,10 @@
 #on:
 #  push:
 #    branches:
-#      - main
-#  pull_request:
-#    branches:
-#      - main
+#      - cicd
+##  pull_request:
+##    branches:
+##      - main
 #
 #jobs:
 #  build:
@@ -54,7 +54,7 @@
 #      # Spring Boot 애플리케이션의 Docker 이미지를 빌드하고 Docker Hub에 푸쉬합니다.
 #      - name: Build and push Spring Boot app Docker image
 #        run:
-          docker build -t ${{ secrets.DOCKER_REPOSITORY }}:backend --platform linux/amd64 .
+#          docker build -t ${{ secrets.DOCKER_REPOSITORY }}:backend --platform linux/amd64 .
 #
 #          docker push ${{ secrets.DOCKER_REPOSITORY }}:backend
 #
@@ -89,14 +89,12 @@
 #            sudo docker pull ${{ secrets.DOCKER_REPOSITORY }}:backend
 #            cd /home/ubuntu/workspace/server/
 #            sudo docker-compose down
-##            sudo docker pull ${{ secrets.DOCKER_REPOSITORY }}:nginx
-##            cd /home/ubuntu/workspace/server/
-##            sudo docker-compose down
+#            sudo docker-compose up -d
+#
 ##            sudo docker rmi $(docker images -q)
-##            sudo docker-compose up -d
 #
 #
-##        # Remote SSH로 EC2 인스턴스 접속 & 애플리케이션 실행
+#        # Remote SSH로 EC2 인스턴스 접속 & 애플리케이션 실행
 ##      - name: Connect to WAS & Execute Application
 ##        uses: appleboy/ssh-action@v0.1.6
 ##        with:
@@ -112,25 +110,25 @@
 ##            docker pull juseungl/investi-mate
 ##            docker run -d -p 8080:8080 --name juseungl/investi-mate
 #
-##      - name: Configure AWS credentials
-##        uses: aws-actions/configure-aws-credentials@v1
-##        with:
-##          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-##          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-##          aws-region: ap-northeast-2
-##
-##      - name: Login to ECR
-##        uses: aws-actions/amazon-ecr-login@v1
-##
-##      - name: Set timestamp
-##        id: vars
-##        run: echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
-##
-##      - name: Build & Push to ECR
-##        run: |
-##          docker build -t hwany-service .
-##          IMAGE_TAG="${{ secrets.AWS_ACCOUNT_NUM }}.dkr.ecr.ap-northeast-2.amazonaws.com/yhp-capstone-repository:hwany-service-${TIMESTAMP}"
-##          docker tag hwany-service $IMAGE_TAG
-##          docker push $IMAGE_TAG
-##        env:
-##          TIMESTAMP: ${{ env.TIMESTAMP }}
+###      - name: Configure AWS credentials
+###        uses: aws-actions/configure-aws-credentials@v1
+###        with:
+###          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+###          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+###          aws-region: ap-northeast-2
+###
+###      - name: Login to ECR
+###        uses: aws-actions/amazon-ecr-login@v1
+###
+###      - name: Set timestamp
+###        id: vars
+###        run: echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
+###
+###      - name: Build & Push to ECR
+###        run: |
+###          docker build -t hwany-service .
+###          IMAGE_TAG="${{ secrets.AWS_ACCOUNT_NUM }}.dkr.ecr.ap-northeast-2.amazonaws.com/yhp-capstone-repository:hwany-service-${TIMESTAMP}"
+###          docker tag hwany-service $IMAGE_TAG
+###          docker push $IMAGE_TAG
+###        env:
+###          TIMESTAMP: ${{ env.TIMESTAMP }}
