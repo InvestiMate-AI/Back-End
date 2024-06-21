@@ -54,7 +54,7 @@
 #      # Spring Boot 애플리케이션의 Docker 이미지를 빌드하고 Docker Hub에 푸쉬합니다.
 #      - name: Build and push Spring Boot app Docker image
 #        run:
-#          docker build -t ${{ secrets.DOCKER_REPOSITORY }}:backend --platform linux/amd64 .
+          docker build -t ${{ secrets.DOCKER_REPOSITORY }}:backend --platform linux/amd64 .
 #
 #          docker push ${{ secrets.DOCKER_REPOSITORY }}:backend
 #
