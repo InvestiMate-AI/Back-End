@@ -55,6 +55,7 @@ public enum ErrorStatus {
     NOT_FOUND_THREAD("해당하는 쓰레드가 없습니다."),
     NOT_FOUND_CONTENT("해당하는 게시물이 없습니다."),
     NOT_FOUND_COMMENT("해당하는 답글이 없습니다."),
+    NOT_FOUND_TRADE_HISTORY("해당하는 거래 내역이 없습니다."),
     UNEXIST_COMMENT_LIKE("좋아요를 누르지 않은 답글입니다."),
 
 

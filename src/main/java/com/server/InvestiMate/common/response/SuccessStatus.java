@@ -54,11 +54,12 @@ public enum SuccessStatus {
     PATCH_MEMBER_PROFILE(HttpStatus.OK, "프로필 수정 완료"),
     NICKNAME_CHECK_SUCCESS(HttpStatus.OK, "사용 가능한 닉네임 입니다."),
     NOTIFICATION_ALL_SUCCESS(HttpStatus.OK,"알림 전체 조회 성공"),
+
     /**
-     * notification
+     * TradeHistory
      */
-    READ_NOTIFICATION_SUCCESS(HttpStatus.OK,"노티 체크 성공"),
-    COUNT_NOTIFICATION_SUCCESS(HttpStatus.OK,"노티 개수 체크 완료");
+    SAVE_TRADE_HISTORY_SUCCESS(HttpStatus.CREATED, "거래 내역 저장 성공"),
+    GET_TRADE_HISTORY_SUCCESS(HttpStatus.OK, "거래 내역 조회 성공");
 
     private final HttpStatus httpStatus;
     private final String message;
