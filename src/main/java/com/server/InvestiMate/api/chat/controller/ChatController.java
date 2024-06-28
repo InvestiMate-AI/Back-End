@@ -53,7 +53,7 @@ public class ChatController {
      * GET RequestDTO: thread_id
      * 특정 채팅방 선택 시 채팅 기록 반환
      */
-    @GetMapping("{chatRoomId}")
+    @GetMapping("/{chatRoomId}")
     public  ResponseEntity<ApiResponse<Object>> getChatRoom(Principal principal, @PathVariable Long chatRoomId) {
         List<MessageGetAllResponseDto> chatRoom = chatQueryService.getChatRoom(chatRoomId);
         return ApiResponse.success(SuccessStatus.GET_THREADS_SUCCESS, chatRoom);
