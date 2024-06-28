@@ -21,13 +21,14 @@ import java.util.stream.Collectors;
 public class ChatQueryService {
     private final MemberRepository memberRepository;
     private final MessageRepository messageRepository;
+    private final ThreadRepository threadRepository;
     public List<ThreadGetAllResponseDto> getThreads(Long memberId) {
         List<ThreadGetAllResponseDto> threads = memberRepository.findThreadsByMemberId(memberId);
         return threads;
     }
 
     public List<MessageGetAllResponseDto> getChatRoom(Long chatRoomId) {
-        List<Message> messages = messageRepository.findAllById(chatRoomId);
+        List<Message> messages = threadRepository.findThreadByIdOrThrow(chatRoomId).getMessages();
         return messages.stream()
                 .map(chatMessage -> MessageGetAllResponseDto.of(chatMessage))
                 .collect(Collectors.toList());
