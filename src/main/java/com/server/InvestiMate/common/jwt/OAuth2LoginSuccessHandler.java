@@ -40,7 +40,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         cookie.setMaxAge(24*60*60);
         //cookie.setSecure(true);
         cookie.setPath("/");
-        cookie.setHttpOnly(true); // JS가 가져 가지 못하게(XSS 방지)
 
         return cookie;
     }
