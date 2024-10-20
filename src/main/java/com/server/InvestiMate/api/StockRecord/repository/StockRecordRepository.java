@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface StockRecordRepository extends JpaRepository<StockRecord, Long> {
     List<StockRecord> findByMemberId(Long memberId);
+    Optional<StockRecord> findById(Long id);
     Optional<StockRecord> findByIdAndMemberId(Long id, Long memberId);
+    List<StockRecord> findByMemberIdAndHasFeedbackFalse(Long memberId);
 }

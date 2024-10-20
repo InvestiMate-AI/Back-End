@@ -61,7 +61,14 @@ public enum SuccessStatus {
     SAVE_TRADE_HISTORY_SUCCESS(HttpStatus.CREATED, "거래 내역 저장 성공"),
     GET_TRADE_HISTORY_SUCCESS(HttpStatus.OK, "거래 내역 조회 성공"),
     UPDATE_TRADE_HISTORY_SUCCESS(HttpStatus.OK, "거래 내역 수정 성공"),
-    DELETE_TRADE_HISTORY_SUCCESS(HttpStatus.OK, "거래 내역 삭제 성공");
+    DELETE_TRADE_HISTORY_SUCCESS(HttpStatus.OK, "거래 내역 삭제 성공"),
+
+    /**
+     * Feedback
+     */
+    CREATE_FEEDBACK_SUCCESS(HttpStatus.CREATED, "피드백 저장 성공"),
+    GET_FEEDBACK_SUCCESS(HttpStatus.OK, "피드백 조회 성공")
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;

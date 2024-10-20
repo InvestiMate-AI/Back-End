@@ -31,6 +31,9 @@ public class StockRecord extends BaseTimeEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
+    @Column(nullable = false)
+    private boolean hasFeedback = false;
+
     @Builder
     public StockRecord(Long id, String tradeDate, String stockName, int tradeVolume, String tradeType, Member member) {
         this.id = id;
@@ -46,5 +49,9 @@ public class StockRecord extends BaseTimeEntity {
         this.stockName = name;
         this.tradeVolume = volume;
         this.tradeType = type;
+    }
+
+    public void setHasFeedback(boolean hasFeedback) {
+        this.hasFeedback = hasFeedback;
     }
 }
