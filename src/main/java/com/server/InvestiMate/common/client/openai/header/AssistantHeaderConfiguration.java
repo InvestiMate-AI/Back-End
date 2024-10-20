@@ -13,6 +13,7 @@ public class AssistantHeaderConfiguration {
         return requestTemplate -> {
             requestTemplate.header("Content-Type", "application/json");
             requestTemplate.header("Authorization", "Bearer " + dotenv.get("OPENAI_API_KEY"));
+            
             requestTemplate.header("OpenAI-Beta", "assistants=v2");
         };
     }

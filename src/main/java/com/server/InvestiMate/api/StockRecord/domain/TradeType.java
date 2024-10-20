@@ -1,4 +1,4 @@
-package com.server.InvestiMate.api.TradeHistory.domain;
+package com.server.InvestiMate.api.StockRecord.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
