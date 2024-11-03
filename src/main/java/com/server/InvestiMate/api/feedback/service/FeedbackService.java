@@ -1,6 +1,8 @@
 package com.server.InvestiMate.api.feedback.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.InvestiMate.api.StockRecord.domain.StockRecord;
+import com.server.InvestiMate.api.StockRecord.dto.StockRecordInputDto;
 import com.server.InvestiMate.api.StockRecord.dto.StockRecordResponseDto;
 import com.server.InvestiMate.api.StockRecord.repository.StockRecordRepository;
 import com.server.InvestiMate.api.feedback.domain.Feedback;
@@ -13,7 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,6 +75,69 @@ public class FeedbackService {
         }
 
         stockRecord.setHasFeedback(true);
+    }
+
+    @Transactional
+    public void saveFeedbackV2(Long memberId, Long stockRecordId) {
+        Member member = memberRepository.findMemberByIdOrThrow(memberId);
+
+        StockRecord stockRecord = stockRecordRepository.findById(stockRecordId)
+                .orElseThrow(() -> new NotFoundException("Stock record not found for this user"));
+
+        try {
+            // ProcessBuilder로 Python 스크립트 호출
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "python3",
+                    "/home/ubuntu/workspace/feedback/feedback.py", // 경로 지정
+                    "get_feedback", // 메소드명 추가
+                    stockRecord.getStockName(), // 예시: 종목명 인자
+                    stockRecord.getTradeDate(), // 예시: 날짜 인자
+                    stockRecord.getTradeType() // 예시: 매수 또는 매도 인자
+            );
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+
+            // Python 스크립트 출력 읽기
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line);
+            }
+
+            // 프로세스 종료 코드 확인
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new RuntimeException("Python script execution failed with code: " + exitCode);
+            }
+
+
+// Python 스크립트의 출력 결과를 콘솔에 출력
+            System.out.println("Python script output: " + output.toString());
+            ObjectMapper mapper = new ObjectMapper();
+            List<FeedbackDto> feedbackDtos = mapper.readValue(output.toString(),
+                    mapper.getTypeFactory().constructCollectionType(List.class, FeedbackDto.class));
+
+            // FeedbackDto 리스트를 Feedback 엔티티로 변환하여 저장
+            for (FeedbackDto request : feedbackDtos) {
+                Feedback feedback = Feedback.builder()
+                        .feedbackIndex(request.index()) // getIndex() 메서드 사용
+                        .feedbackType(request.type()) // getType() 메서드 사용
+                        .data(request.data()) // getData() 메서드 사용
+                        .member(member)
+                        .stockRecord(stockRecord)
+                        .build();
+
+                feedbackRepository.save(feedback);
+            }
+
+            // 피드백이 저장된 후 주식 기록에 피드백이 추가됨을 표시
+            stockRecord.setHasFeedback(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Optional: Handle the error more gracefully or log it
+        }
     }
 
     @Transactional(readOnly = true)

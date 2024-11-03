@@ -1,5 +1,6 @@
 package com.server.InvestiMate.api.feedback.controller;
 
+import com.server.InvestiMate.api.StockRecord.dto.StockRecordInputDto;
 import com.server.InvestiMate.api.StockRecord.dto.StockRecordResponseDto;
 import com.server.InvestiMate.api.feedback.dto.FeedbackDto;
 import com.server.InvestiMate.api.feedback.service.FeedbackService;
@@ -29,6 +30,9 @@ public class FeedbackController {
         return ApiResponse.success(SuccessStatus.GET_TRADE_HISTORY_SUCCESS, feedbackService.getPossibleStockRecords(memberId));
     }
 
+    /**
+     * 이미 피드백 생성된 거래 기록 조회
+     */
     @GetMapping("/already")
     public ResponseEntity<ApiResponse<List<StockRecordResponseDto>>> getImpossibleStockRecords(Principal principal) {
         Long memberId = MemberUtil.getMemberId(principal);
@@ -46,6 +50,19 @@ public class FeedbackController {
     ) {
         Long memberId = MemberUtil.getMemberId(principal);
         feedbackService.saveFeedback(memberId, feedbackRequests, stockRecordId);
+        return ApiResponse.success(SuccessStatus.CREATE_FEEDBACK_SUCCESS);
+    }
+
+    /**
+     * 피드백 저장(+파이썬 스크립트)
+     */
+    @PostMapping("/py/{id}")
+    public ResponseEntity<ApiResponse<Object>> saveFeedbackV2(
+            Principal principal,
+            @PathVariable("id") Long stockRecordId
+    ) {
+        Long memberId = MemberUtil.getMemberId(principal);
+        feedbackService.saveFeedbackV2(memberId, stockRecordId);
         return ApiResponse.success(SuccessStatus.CREATE_FEEDBACK_SUCCESS);
     }
 
