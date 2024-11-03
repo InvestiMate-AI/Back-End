@@ -73,4 +73,11 @@ public class ChatController {
         chatCommandService.saveMessage(MemberUtil.getMemberId(principal), chatRoomId, messageCreateRequestDto);
         return ApiResponse.success(SuccessStatus.CREATE_MESSAGE_SUCCESS);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Object>> deleteChat(Principal principal, @PathVariable("id") Long chatId) {
+        Long memberId = MemberUtil.getMemberId(principal);
+        chatCommandService.deleteThread(memberId, chatId);
+        return ApiResponse.success(SuccessStatus.DELETE_THREAD_SUCCESS);
+    }
 }

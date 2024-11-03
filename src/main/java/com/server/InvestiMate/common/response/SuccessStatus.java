@@ -23,6 +23,7 @@ public enum SuccessStatus {
     GET_THREADS_SUCCESS(HttpStatus.OK, "쓰레드들 조회 성공"),
     GET_THREAD_SUCCESS(HttpStatus.OK, "채팅방 조회 성공"),
     CREATE_MESSAGE_SUCCESS(HttpStatus.CREATED, "메세지 생성 성공"),
+    DELETE_THREAD_SUCCESS(HttpStatus.OK, "쓰레드 제거 성공"),
 
     /**
      * content
@@ -60,6 +61,7 @@ public enum SuccessStatus {
      */
     SAVE_TRADE_HISTORY_SUCCESS(HttpStatus.CREATED, "거래 내역 저장 성공"),
     GET_TRADE_HISTORY_SUCCESS(HttpStatus.OK, "거래 내역 조회 성공"),
+    GET_TRADE_HISTORY_HAS_FEEDBACK_SUCCESS(HttpStatus.OK, "이미 피드백 기록 있는 거래 내역 조회 성공"),
     UPDATE_TRADE_HISTORY_SUCCESS(HttpStatus.OK, "거래 내역 수정 성공"),
     DELETE_TRADE_HISTORY_SUCCESS(HttpStatus.OK, "거래 내역 삭제 성공"),
 

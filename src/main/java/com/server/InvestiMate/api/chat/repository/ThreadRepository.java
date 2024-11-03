@@ -20,5 +20,6 @@ public interface ThreadRepository extends JpaRepository<Thread, Long> {
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER.getMessage()));
     }
 
+    Optional<Thread> findByIdAndMemberId(Long chatRoomId, Long memberId);
 
 }

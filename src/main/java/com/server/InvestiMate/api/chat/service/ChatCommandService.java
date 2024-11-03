@@ -1,5 +1,6 @@
 package com.server.InvestiMate.api.chat.service;
 
+import com.server.InvestiMate.api.StockRecord.domain.StockRecord;
 import com.server.InvestiMate.api.chat.domain.Message;
 import com.server.InvestiMate.api.chat.domain.Thread;
 import com.server.InvestiMate.api.chat.domain.Report;
@@ -12,6 +13,7 @@ import com.server.InvestiMate.api.chat.repository.ReportRepository;
 import com.server.InvestiMate.api.member.domain.Member;
 import com.server.InvestiMate.api.member.repository.MemberRepository;
 import com.server.InvestiMate.common.client.openai.AssistantsClient;
+import com.server.InvestiMate.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,4 +58,10 @@ public class ChatCommandService {
         messageRepository.save(message);
     }
 
+    public void deleteThread(Long memberId, Long chatId) {
+
+        Thread thread = threadRepository.findByIdAndMemberId(chatId, memberId)
+                .orElseThrow(() -> new NotFoundException("Thread not found for this user"));
+        threadRepository.delete(thread);
+    }
 }

@@ -11,4 +11,5 @@ public interface StockRecordRepository extends JpaRepository<StockRecord, Long> 
     Optional<StockRecord> findById(Long id);
     Optional<StockRecord> findByIdAndMemberId(Long id, Long memberId);
     List<StockRecord> findByMemberIdAndHasFeedbackFalse(Long memberId);
+    List<StockRecord> findByMemberIdAndHasFeedbackTrue(Long memberId);
 }

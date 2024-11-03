@@ -33,7 +33,7 @@ public class Thread extends BaseEntity {
     @Column(name = "thread_id")
     private String threadId;
 
-    @OneToMany(mappedBy = "thread")
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
     @Builder

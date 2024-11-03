@@ -7,6 +7,7 @@ import com.server.InvestiMate.common.response.ApiResponse;
 import com.server.InvestiMate.common.response.SuccessStatus;
 import com.server.InvestiMate.common.util.MemberUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,12 @@ public class FeedbackController {
         return ApiResponse.success(SuccessStatus.GET_TRADE_HISTORY_SUCCESS, feedbackService.getPossibleStockRecords(memberId));
     }
 
+    @GetMapping("/already")
+    public ResponseEntity<ApiResponse<List<StockRecordResponseDto>>> getImpossibleStockRecords(Principal principal) {
+        Long memberId = MemberUtil.getMemberId(principal);
+        return ApiResponse.success(SuccessStatus.GET_TRADE_HISTORY_HAS_FEEDBACK_SUCCESS, feedbackService.getImpossibleStockRecords(memberId));
+    }
+
     /**
      * 피드백 저장
      */
@@ -42,9 +49,8 @@ public class FeedbackController {
         return ApiResponse.success(SuccessStatus.CREATE_FEEDBACK_SUCCESS);
     }
 
-
     /**
-     * 피드백 조회
+     * 특정 피드백 조회
      */
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<List<FeedbackDto>>> getFeedback(

@@ -35,6 +35,20 @@ public class FeedbackService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<StockRecordResponseDto> getImpossibleStockRecords(Long memberId) {
+        return stockRecordRepository.findByMemberIdAndHasFeedbackTrue(memberId).stream()
+                .map(record -> new StockRecordResponseDto(
+                        record.getId(),
+                        record.getTradeDate(),
+                        record.getStockName(),
+                        record.getTradeVolume(),
+                        record.getTradeType()
+                ))
+                .collect(Collectors.toList());
+    }
+
+
     @Transactional
     public void saveFeedback(Long memberId, List<FeedbackDto> feedbackDtos, Long stockRecordId) {
         Member member = memberRepository.findMemberByIdOrThrow(memberId);
