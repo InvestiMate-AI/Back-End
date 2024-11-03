@@ -83,7 +83,7 @@ public class FeedbackService {
 
         StockRecord stockRecord = stockRecordRepository.findById(stockRecordId)
                 .orElseThrow(() -> new NotFoundException("Stock record not found for this user"));
-
+        System.out.println("stockRecord.getStockName()+ stockRecord.getTradeDate() + stockRecord.getTradeType() = " + stockRecord.getStockName()+ stockRecord.getTradeDate() + stockRecord.getTradeType());
         try {
             // ProcessBuilder로 Python 스크립트 호출
             ProcessBuilder processBuilder = new ProcessBuilder(

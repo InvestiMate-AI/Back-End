@@ -6,17 +6,17 @@ def get_feedback(name, date, trade_type):
     feedback_data = [
         {
             "index": 0,
-            "type": "table",
+            "type": name,
             "data": json.dumps({"Open": f"Processed feedback for {name} on {date} with trade type {trade_type}"})
         },
         {
             "index": 1,
-            "type": "table",
+            "type": date,
             "data": json.dumps({"Open": f"Processed feedback for {name} on {date} with trade type {trade_type}"})
         },
         {
             "index": 2,
-            "type": "table",
+            "type": trade_type,
             "data": json.dumps({"Open": f"Processed feedback for {name} on {date} with trade type {trade_type}"})
         }
     ]
