@@ -87,45 +87,4 @@ jobs:
             cd /home/ubuntu/workspace/server/
             sudo docker-compose down
             sudo docker-compose up -d
-
-#            sudo docker rmi $(docker images -q)
-
-
-        # Remote SSH로 EC2 인스턴스 접속 & 애플리케이션 실행
-#      - name: Connect to WAS & Execute Application
-#        uses: appleboy/ssh-action@v0.1.6
-#        with:
-#          host: ${{ secrets.SSH_HOST }} # 퍼블릭 IPv4 DNS
-#          username: ubuntu
-#          key: ${{ secrets.SSH_KEY }} # cat {ec2_instance_name}.pem
-#          port: ${{ secrets.SSH_PORT }} # 보안 그룹 인바운드 규칙의 SSH Port Number
-#          script: |
-#            docker stop $(docker ps -a -q)
-#            docker rm $(docker ps -a -q)
-#            docker rmi $(sudo docker images -q)
-#
-#            docker pull juseungl/investi-mate
-#            docker run -d -p 8080:8080 --name juseungl/investi-mate
-
-##      - name: Configure AWS credentials
-##        uses: aws-actions/configure-aws-credentials@v1
-##        with:
-##          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-##          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-##          aws-region: ap-northeast-2
-##
-##      - name: Login to ECR
-##        uses: aws-actions/amazon-ecr-login@v1
-##
-##      - name: Set timestamp
-##        id: vars
-##        run: echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
-##
-##      - name: Build & Push to ECR
-##        run: |
-##          docker build -t hwany-service .
-##          IMAGE_TAG="${{ secrets.AWS_ACCOUNT_NUM }}.dkr.ecr.ap-northeast-2.amazonaws.com/yhp-capstone-repository:hwany-service-${TIMESTAMP}"
-##          docker tag hwany-service $IMAGE_TAG
-##          docker push $IMAGE_TAG
-##        env:
-##          TIMESTAMP: ${{ env.TIMESTAMP }}
+            sudo docker exec backend-container /bin/bash -c "source /opt/venv/bin/activate && java -jar -Duser.timezone=Asia/Seoul /app.jar"
