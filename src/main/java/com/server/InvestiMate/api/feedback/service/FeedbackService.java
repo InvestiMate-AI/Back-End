@@ -88,7 +88,7 @@ public class FeedbackService {
             // ProcessBuilder로 Python 스크립트 호출
             ProcessBuilder processBuilder = new ProcessBuilder(
                     "python3",
-                    "/home/ubuntu/workspace/feedback/feedback.py", // 경로 지정
+                    "/app/feedback/feedback.py", // 경로 지정
                     "get_feedback", // 메소드명 추가
                     stockRecord.getStockName(), // 예시: 종목명 인자
                     stockRecord.getTradeDate(), // 예시: 날짜 인자
