@@ -15,4 +15,4 @@ COPY ${JAR_FILE} app.jar
 COPY .env .env
 
 # Set the timezone and run the application
-ENTRYPOINT ["/bin/sh", "-c", "source /opt/venv/bin/activate && java -jar -Duser.timezone=Asia/Seoul /app.jar"]
+ENTRYPOINT ["/bin/sh", "-c", ". /opt/venv/bin/activate && java -jar -Duser.timezone=Asia/Seoul /app.jar"]
