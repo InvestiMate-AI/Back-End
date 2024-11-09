@@ -111,11 +111,8 @@ public class FeedbackService {
                 throw new RuntimeException("Python script execution failed with code: " + exitCode);
             }
 
-
-// Python 스크립트의 출력 결과를 콘솔에 출력
-            System.out.println("Python script output: " + output.toString());
             ObjectMapper mapper = new ObjectMapper();
-            List<FeedbackDto> feedbackDtos = mapper.readValue(output.toString(),
+            List<FeedbackDto> feedbackDtos = mapper.readValue(output.toString().replace("'", "\"") ,
                     mapper.getTypeFactory().constructCollectionType(List.class, FeedbackDto.class));
 
             // FeedbackDto 리스트를 Feedback 엔티티로 변환하여 저장
