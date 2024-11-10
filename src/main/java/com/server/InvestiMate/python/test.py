@@ -1,30 +1,125 @@
-import json
 import sys
+import json
 
-def get_feedback(name, date, trade_type):
-    # 반환할 JSON 데이터 작성
-    feedback_data = [
+def get_simulation_data():
+    # 예상되는 반환값의 JSON 데이터 생성
+    return [
         {
             "index": 0,
-            "type": name,
-            "data": json.dumps({"Open": f"Processed feedback for {name} on {date} with trade type {trade_type}"})
+            "type": "chart_shares",
+            "data": {
+                "shares": {
+                    "1697414400000": 0,
+                    "1697500800000": 0,
+                    "1697587200000": 0,
+                    "1697673600000": 0,
+                    "1697760000000": 0
+                }
+            }
         },
         {
             "index": 1,
-            "type": date,
-            "data": json.dumps({"Open": f"Processed feedback for {name} on {date} with trade type {trade_type}"})
+            "type": "chart_asset",
+            "data": {
+                "total_value": {
+                    "1697414400000": 100000000,
+                    "1697500800000": 100000000,
+                    "1697587200000": 100000000,
+                    "1697673600000": 100000000,
+                    "1697760000000": 100000000
+                },
+                "cash": {
+                    "1697414400000": 100000000,
+                    "1697500800000": 100000000,
+                    "1697587200000": 100000000,
+                    "1697673600000": 100000000,
+                    "1697760000000": 100000000
+                }
+            }
         },
         {
             "index": 2,
-            "type": trade_type,
-            "data": json.dumps({"Open": f"Processed feedback for {name} on {date} with trade type {trade_type}"})
+            "type": "chart_returns",
+            "data": {
+                "returns": {
+                    "1697414400000": 0.0,
+                    "1697500800000": 0.0,
+                    "1697587200000": 0.0,
+                    "1697673600000": 0.0,
+                    "1697760000000": 0.0
+                },
+                "holding_returns": {
+                    "1697414400000": 0.0,
+                    "1697500800000": 3.1203566122,
+                    "1697587200000": 4.7548291233,
+                    "1697673600000": 3.2689450223,
+                    "1697760000000": 2.2288261516
+                }
+            }
+        },
+        {
+            "index": 3,
+            "type": "chart_signals",
+            "data": {
+                "buy_pattern_0": {
+                    "1697414400000": None,
+                    "1697500800000": None,
+                    "1697587200000": None,
+                    "1697673600000": None,
+                    "1697760000000": None
+                },
+                "buy_pattern_1": {
+                    "1697414400000": None,
+                    "1697500800000": None,
+                    "1697587200000": None,
+                    "1697673600000": None,
+                    "1697760000000": None
+                },
+                "buy_pattern_2": {
+                    "1697414400000": None,
+                    "1697500800000": None,
+                    "1697587200000": None,
+                    "1697673600000": None,
+                    "1697760000000": None
+                },
+                "buy_pattern_3": {
+                    "1697414400000": None,
+                    "1697500800000": None,
+                    "1697587200000": None,
+                    "1697673600000": None,
+                    "1697760000000": None
+                },
+                "sell_pattern_0": {
+                    "1697414400000": None,
+                    "1697500800000": None,
+                    "1697587200000": None,
+                    "1697673600000": None,
+                    "1697760000000": None
+                },
+                "sell_pattern_1": {
+                    "1697414400000": None,
+                    "1697500800000": None,
+                    "1697587200000": None,
+                    "1697673600000": None,
+                    "1697760000000": None
+                },
+                "Close": {
+                    "1697414400000": 67300,
+                    "1697500800000": 69400,
+                    "1697587200000": 70500,
+                    "1697673600000": 69500,
+                    "1697760000000": 68800
+                }
+            }
         }
     ]
-    print(json.dumps(feedback_data))
-    return feedback_data
 
-if __name__ == '__main__':
-    func_name = sys.argv[1]
-    var = sys.argv[2:]
-    if func_name == 'get_feedback':
-        get_feedback(var[0], var[1], var[2])
+if __name__ == "__main__":
+    # 인자로 JSON을 받아 출력 (예시)
+    simulation_setting = json.loads(sys.argv[1])
+
+    # Python 함수 호출하여 결과 반환
+    result = get_simulation_data()
+
+    # JSON 형식으로 출력
+    print(json.dumps(result))

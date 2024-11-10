@@ -69,7 +69,12 @@ public enum SuccessStatus {
      * Feedback
      */
     CREATE_FEEDBACK_SUCCESS(HttpStatus.CREATED, "피드백 저장 성공"),
-    GET_FEEDBACK_SUCCESS(HttpStatus.OK, "피드백 조회 성공")
+    GET_FEEDBACK_SUCCESS(HttpStatus.OK, "피드백 조회 성공"),
+
+    /**
+     * Simulation
+     */
+    CREATE_SIMULATION_SUCCESS(HttpStatus.CREATED, "시뮬레이션 생성 성공")
     ;
 
     private final HttpStatus httpStatus;

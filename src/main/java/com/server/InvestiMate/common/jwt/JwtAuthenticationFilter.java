@@ -39,7 +39,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/swagger-ui/index.html"};
+            "/swagger-ui/index.html",
+            "/api/v1/simulations"
+
+    };
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
