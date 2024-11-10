@@ -74,7 +74,8 @@ public enum SuccessStatus {
     /**
      * Simulation
      */
-    CREATE_SIMULATION_SUCCESS(HttpStatus.CREATED, "시뮬레이션 생성 성공")
+    CREATE_SIMULATION_SUCCESS(HttpStatus.CREATED, "시뮬레이션 생성 성공"),
+    CREATE_SIMULATION2_SUCCESS(HttpStatus.CREATED, "시뮬레이션2 생성 성공")
     ;
 
     private final HttpStatus httpStatus;
