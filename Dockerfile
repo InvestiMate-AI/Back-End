@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
 RUN python3 -m venv /opt/venv
 
 # Install required Python packages inside the virtual environment
-RUN /opt/venv/bin/pip install pandas numpy openai==0.28.0 tqdm matplotlib python-dotenv scipy
+RUN /opt/venv/bin/pip install pandas numpy openai==0.28.0 tqdm matplotlib python-dotenv scipy dask
 
 # Copy your JAR file and .env file
 ARG JAR_FILE=build/libs/*.jar
